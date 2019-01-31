@@ -25,12 +25,12 @@ class Coordinates extends InteractionEvents {
         document.getElementById('info').innerHTML = `
         <div class="row">
             <div>
-                <h4>Initial</h4> 
+                <h4>Origin</h4> 
                 x: ${Math.round(this.initial.x)} <br>
                 y: ${Math.round(this.initial.y)}
             </div>
             <div>
-                <h4>Move</h4>
+                <h4>Current</h4>
                 x: ${Math.round(this.move.x)} <br>
                 y: ${Math.round(this.move.y)} <br>
             </div>
