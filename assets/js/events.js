@@ -2,6 +2,7 @@
 //TODO:     Debounce, throttle
 //TODO:     Ability to ignore multitouch
 //TODO:     Attach with prototype: .interaction({args}) (?)
+//TODO:     Get velocity of movement
 
 export class InteractionEvents {
     constructor(element, treshold = 0) {
@@ -52,6 +53,7 @@ export class InteractionEvents {
         if (this._mousedown) {
             this.setCoords('move', event)
             this.getDifference()
+            console.log(event)
         }
     }
 
