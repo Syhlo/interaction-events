@@ -25,10 +25,6 @@ class Coordinates extends InteractionEvents {
         document.getElementById('info').innerHTML = `
         <div class="row">
             <div>
-                <h4>Active Events</h4>
-                ${this.events.join('<br>')}
-            </div>
-            <div>
                 <h4>Initial</h4> 
                 x: ${Math.round(this.initial.x)} <br>
                 y: ${Math.round(this.initial.y)}
@@ -45,6 +41,10 @@ class Coordinates extends InteractionEvents {
             </div>
         </div>
         <div class="row">
+            <div>
+                <h4>Events</h4>
+                ${this.events.join('<br>')}
+            </div>
             <div>
                 <h4>Polar</h4>
                 Distance: ${Math.round(this.distance(this.difference))} <br>
