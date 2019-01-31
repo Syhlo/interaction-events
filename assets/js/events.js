@@ -103,4 +103,19 @@ export class InteractionEvents {
         return Math.atan2(y, x)
     }
 
+    divideCircleEqually(numberOfParts) {
+        const part = 360 / numberOfParts
+        let arr = []
+        if (numberOfParts > 1) {
+            for (let i = 0; i < numberOfParts; i++) {
+                if (numberOfParts % 2 !== 0) {
+                    arr.push(((part * i)) + part)
+                } else {
+                    arr.push((part * i) + (part / 2))
+                }
+            }
+        }
+        return arr.length > 1 ? arr : false
+    }
+
 }
