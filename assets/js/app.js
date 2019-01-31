@@ -117,7 +117,7 @@ class Coordinates extends InteractionEvents {
     //?                             Canvas Draw
     drawCrosshair({ x, y } = {}, length) {
         let ctx = canvas.getContext('2d')
-        // ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.beginPath()
         ctx.moveTo(x + length, y + length)
         ctx.lineTo(x - length, y - length)
