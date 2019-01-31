@@ -11,7 +11,7 @@ class Coordinates extends InteractionEvents {
         this.info()
     }
 
-    //?                             Canvas Coordinates
+    //?                             Canvas Creation
     createCanvas(element) {
         const canvas = document.createElement('canvas')
         canvas.id = 'canvas'
@@ -75,7 +75,7 @@ class Coordinates extends InteractionEvents {
         }
     }
 
-    //?                     POLYMORPHS
+    //?                             Polymorphs
     onmousedown() {
         super.onmousedown(event)
         this.drawCrosshair(this.initial, 200)
