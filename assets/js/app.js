@@ -53,7 +53,7 @@ class Coordinates extends InteractionEvents {
             </div>
             <div>
                 <h4>Misc</h4>
-                Direction: ${this.moveDirection()}
+                Position: ${this.moveDirection()}
             </div>
         </div>
         `
@@ -71,7 +71,7 @@ class Coordinates extends InteractionEvents {
                 this.difference.x > 0 ? 'left' : 'right'
                 : this.difference.y > 0 ? 'up' : 'down'
         } else {
-            return 'ignored'
+            return 'null'
         }
     }
 
