@@ -112,6 +112,14 @@ export class InteractionEvents {
         return degree > 180 ? (degree - 360) * Math.PI / 180 : degree * Math.PI / 180
     }
 
+
+    degreeToCartesianCoords(distance, theta) {
+        return {
+            x: Math.round(distance * Math.cos(theta)),
+            y: Math.round(distance * Math.sin(theta))
+        }
+    }
+
     divideCircleEqually(numberOfParts) {
         const part = 360 / numberOfParts
         let arr = []
@@ -121,12 +129,4 @@ export class InteractionEvents {
         }
         return arr.length > 1 ? arr : false
     }
-
-    getCartesianCoords(distance, theta) {
-        return {
-            x: Math.round(distance * Math.cos(theta)),
-            y: Math.round(distance * Math.sin(theta))
-        }
-    }
-
 }
