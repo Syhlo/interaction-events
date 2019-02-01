@@ -53,7 +53,6 @@ export class InteractionEvents {
         if (this._mousedown) {
             this.setCoords('move', event)
             this.getDifference()
-            console.log(event)
         }
     }
 
@@ -105,19 +104,29 @@ export class InteractionEvents {
         return Math.atan2(y, x)
     }
 
+    radianToDegree({ x, y }) {
+        return this.radian({ x, y }) * (180 / Math.PI) + 360 % 360
+    }
+
+    degreeToRadian(degree) {
+        return degree > 180 ? (degree - 360) * Math.PI / 180 : degree * Math.PI / 180
+    }
+
     divideCircleEqually(numberOfParts) {
         const part = 360 / numberOfParts
         let arr = []
-        if (numberOfParts > 1) {
-            for (let i = 0; i < numberOfParts; i++) {
-                if (numberOfParts % 2 !== 0) {
-                    arr.push(((part * i)) + part)
-                } else {
-                    arr.push((part * i) + (part / 2))
-                }
-            }
+        for (let i = 0; i < numberOfParts; i++) {
+            if (!!(numberOfParts % 2)) arr.push(Math.round((part * i) + part))
+            else arr.push(Math.round((part * i) + (part / 2)))
         }
         return arr.length > 1 ? arr : false
+    }
+
+    getCartesianCoords(distance, theta) {
+        return {
+            x: Math.round(distance * Math.cos(theta)),
+            y: Math.round(distance * Math.sin(theta))
+        }
     }
 
 }
