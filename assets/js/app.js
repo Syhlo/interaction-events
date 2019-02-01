@@ -49,7 +49,7 @@ class Coordinates extends InteractionEvents {
                 <h4>Polar</h4>
                 Distance: ${Math.round(this.distance(this.difference))} <br>
                 Radian: ${this.radian(this.difference).toFixed(3)} <br>
-                Degree: ${Math.round(this.radianToDegree(this.difference))}
+                Degree: ${Math.round(this.degree(this.difference))}
             </div>
             <div>
                 <h4>Misc</h4>
