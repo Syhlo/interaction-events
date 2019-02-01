@@ -104,16 +104,13 @@ export class InteractionEvents {
         return Math.atan2(y, x)
     }
 
-    radianToDegree({ x, y }) {
+    degree({ x, y }) {
         return this.radian({ x, y }) * (180 / Math.PI) + 360 % 360
     }
 
-    degreeToRadian(degree) {
-        return degree > 180 ? (degree - 360) * Math.PI / 180 : degree * Math.PI / 180
-    }
 
-
-    degreeToCartesianCoords(distance, theta) {
+    degreeToCartesianCoords(distance, degree) {
+        let theta = degree > 180 ? (degree - 360) * Math.PI / 180 : degree * Math.PI / 180
         return {
             x: Math.round(distance * Math.cos(theta)),
             y: Math.round(distance * Math.sin(theta))
