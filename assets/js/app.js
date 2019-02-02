@@ -44,10 +44,86 @@ class Coordinates extends Interaction {
             </div>
             <div>
                 <h4>Misc</h4>
-                Position: ${this.moveDirection()}
+                Position: ${this.getRegion()}
             </div>
         </div>
         `
+    }
+
+    //?                             Helper Methods
+    //! Work on these two methods when I get home (look at other array methods)
+    getRegion() {
+        let arr = this.divideCircleEqually(8)
+        var result
+        arr.forEach((item, index) => {
+            if (index !== arr.length - 1 && this.inRange(item, arr[index + 1])) result = index
+        })
+        return result
+
+    }
+
+    //! Work on these two methods when I get home
+    inRange(regionStart, regionEnd) {
+        let degree = this.degree(this.difference)
+        return ((degree - regionStart) * (degree - regionEnd) <= 0)
+    }
+
+
+
+    xIsLarger() {
+        return Math.abs(this.difference.x) > Math.abs(this.difference.y)
+    }
+
+    // redo this
+    moveDirection() {
+        if (this.circularThreshold()) {
+            return this.xIsLarger() ?
+                this.difference.x > 0 ? 'left' : 'right'
+                : this.difference.y > 0 ? 'up' : 'down'
+        } else {
+            return 'null'
+        }
+    }
+
+    //?                             Polymorphs
+    onmousedown() {
+        super.onmousedown(event)
+        this.generateRegions(8, 150)
+        this.drawCircle(this.initial, 8, '#6B9F55')
+    }
+
+    ontouchstart(event) {
+        super.ontouchstart(event)
+        this.generateRegions(8, 150)
+        this.drawCircle(this.initial, 8, '#6B9F55')
+    }
+
+    ontouchmove(event) {
+        super.ontouchmove(event)
+        this.info()
+    }
+
+    onmousemove(event) {
+        super.onmousemove(event)
+        if (this._mousedown) {
+            this.info()
+        }
+    }
+
+    onmouseup(event) {
+        super.onmouseup(event)
+        this.info()
+        if (this.circularThreshold()) {
+            this.drawCircle(this.move, 6, '#9F5555')
+        }
+    }
+
+    ontouchend(event) {
+        super.ontouchend(event)
+        this.info()
+        if (this.circularThreshold()) {
+            this.drawCircle(this.move, 6, '#9F5555')
+        }
     }
 
     //?                             Canvas Creation
@@ -85,61 +161,6 @@ class Coordinates extends Interaction {
         ctx.strokeStyle = "#707070"
         if (color) ctx.fill()
         if (stroke) ctx.stroke()
-    }
-
-    //?                             Polymorphs
-    onmousedown() {
-        super.onmousedown(event)
-        this.generateRegions(8, 150)
-        this.drawCircle(this.initial, 8, '#6B9F55')
-    }
-
-    ontouchstart(event) {
-        super.ontouchstart(event)
-        this.drawCrosshair(this.initial, 200)
-        this.drawCircle(this.initial, 8, '#6B9F55')
-    }
-
-    ontouchmove(event) {
-        super.ontouchmove(event)
-        this.info()
-    }
-
-    onmousemove(event) {
-        super.onmousemove(event)
-        if (this._mousedown) this.info()
-    }
-
-    onmouseup(event) {
-        super.onmouseup(event)
-        this.info()
-        if (this.circularThreshold()) {
-            this.drawCircle(this.move, 6, '#9F5555')
-        }
-    }
-
-    ontouchend(event) {
-        super.ontouchend(event)
-        this.info()
-        if (this.circularThreshold()) {
-            this.drawCircle(this.move, 6, '#9F5555')
-        }
-    }
-
-    //?                             Helper Methods
-    xIsLarger() {
-        return Math.abs(this.difference.x) > Math.abs(this.difference.y)
-    }
-
-    // redo this
-    moveDirection() {
-        if (this.circularThreshold()) {
-            return this.xIsLarger() ?
-                this.difference.x > 0 ? 'left' : 'right'
-                : this.difference.y > 0 ? 'up' : 'down'
-        } else {
-            return 'null'
-        }
     }
 
 }
