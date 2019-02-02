@@ -1,10 +1,9 @@
 //TODO:     Gesture handling? Track circular motion, zigzag, rectangular motion?
 //TODO:     Debounce, throttle
 //TODO:     Ability to ignore multitouch
-//TODO:     Attach with prototype: .interaction({args}) (?)
 //TODO:     Get velocity of movement
 
-export class InteractionEvents {
+export class Interaction {
     constructor(element, treshold = 0) {
         this.element = element
         this.events = ['mousedown', 'mousemove', 'mouseup', 'mouseleave']
@@ -78,8 +77,39 @@ export class InteractionEvents {
         // TBD
     }
 
+    //?                             Data methods
+    distance({ x, y }) {
+        return Math.sqrt(x * x + y * y)
+    }
 
-    //?                             Helper Methods
+    radian({ x, y }) {
+        return Math.atan2(y, x)
+    }
+
+    degree({ x, y }) {
+        return (this.radian({ x, y }) * (180 / Math.PI) + 360) % 360
+    }
+
+    //?                             Process methods
+    divideCircleEqually(numberOfParts) {
+        const part = 360 / numberOfParts
+        let arr = []
+        for (let i = 0; i < numberOfParts; i++) {
+            if (!!(numberOfParts % 2)) arr.push(Math.round((part * i) + part))
+            else arr.push(Math.round((part * i) + (part / 2)))
+        }
+        return arr.length > 1 ? arr : false
+    }
+
+    degreeToCartesian(distance, degree) {
+        let theta = degree > 180 ? (degree - 360) * Math.PI / 180 : degree * Math.PI / 180
+        return {
+            x: Math.round(distance * Math.cos(theta)),
+            y: Math.round(distance * Math.sin(theta))
+        }
+    }
+
+    //?                             Helper methods
     setCoords(name, type) {
         this[name].x = type.clientX
         this[name].y = type.clientY
@@ -94,36 +124,5 @@ export class InteractionEvents {
 
     circularThreshold() {
         return Math.abs(this.distance(this.difference)) > this.threshold
-    }
-
-    distance({ x, y }) {
-        return Math.sqrt(x * x + y * y)
-    }
-
-    radian({ x, y }) {
-        return Math.atan2(y, x)
-    }
-
-    degree({ x, y }) {
-        return this.radian({ x, y }) * (180 / Math.PI) + 360 % 360
-    }
-
-
-    degreeToCartesianCoords(distance, degree) {
-        let theta = degree > 180 ? (degree - 360) * Math.PI / 180 : degree * Math.PI / 180
-        return {
-            x: Math.round(distance * Math.cos(theta)),
-            y: Math.round(distance * Math.sin(theta))
-        }
-    }
-
-    divideCircleEqually(numberOfParts) {
-        const part = 360 / numberOfParts
-        let arr = []
-        for (let i = 0; i < numberOfParts; i++) {
-            if (!!(numberOfParts % 2)) arr.push(Math.round((part * i) + part))
-            else arr.push(Math.round((part * i) + (part / 2)))
-        }
-        return arr.length > 1 ? arr : false
     }
 }
