@@ -53,7 +53,6 @@ class Coordinates extends Interaction {
     //?                             Helper Methods
     getRegion() {
         const arr = this.divideCircleEqually(11)
-        console.log(arr)
         const degree = this.degree(this.difference)
         let result
         for (let i = 0; i < arr.length; i++) {
