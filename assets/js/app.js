@@ -51,20 +51,18 @@ class Coordinates extends Interaction {
     }
 
     //?                             Helper Methods
-    //! Work on these two methods when I get home (look at other array methods)
     getRegion() {
-        let arr = this.divideCircleEqually(8)
-        var result
-        arr.forEach((item, index) => {
-            if (index !== arr.length - 1 && this.inRange(item, arr[index + 1])) result = index
-        })
+        const arr = this.divideCircleEqually(8)
+        const degree = this.degree(this.difference)
+        let result
+        for (let i = 0; i < arr.length; i++) {
+            if (degree > arr[arr.length - 1] || degree < arr[0]) result = arr.length - 1
+            else if (this.inRegion(degree, arr[i], arr[i + 1])) result = i
+        }
         return result
-
     }
 
-    //! Work on these two methods when I get home
-    inRange(regionStart, regionEnd) {
-        let degree = this.degree(this.difference)
+    inRegion(degree, regionStart, regionEnd) {
         return ((degree - regionStart) * (degree - regionEnd) <= 0)
     }
 
