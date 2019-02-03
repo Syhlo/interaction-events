@@ -1,5 +1,4 @@
 //TODO:     Gesture handling? Track circular motion, zigzag, rectangular motion?
-//TODO:     Debounce, throttle
 //TODO:     Ability to ignore multitouch
 //TODO:     Get velocity of movement
 
@@ -98,7 +97,7 @@ export class Interaction {
         const part = 360 / numberOfParts
         let arr = []
         for (let i = 0; i < numberOfParts; i++) {
-            if (!!(numberOfParts % 2)) arr.push(Math.round((part * i) + part))
+            if (!!(numberOfParts % 2)) arr.push(Math.round(part * i))
             else arr.push(Math.round((part * i) + (part / 2)))
         }
         return arr.length > 1 ? arr : false
