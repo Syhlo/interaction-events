@@ -15,7 +15,6 @@ export class Interaction {
 
         // init
         this.attachEvents()
-        this.info()
     }
 
     //?                             Event listeners & delegation
@@ -90,6 +89,10 @@ export class Interaction {
         return (this.radian({ x, y }) * (180 / Math.PI) + 360) % 360
     }
 
+    circularThreshold() {
+        return Math.abs(this.distance(this.difference)) > this.threshold
+    }
+
     //?                             Process methods
     divideCircleEqually(numberOfParts) {
         const part = 360 / numberOfParts
@@ -120,9 +123,5 @@ export class Interaction {
             x: (this.initial.x - this.move.x),
             y: (this.initial.y - this.move.y)
         }
-    }
-
-    circularThreshold() {
-        return Math.abs(this.distance(this.difference)) > this.threshold
     }
 }
