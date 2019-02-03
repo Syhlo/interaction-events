@@ -52,7 +52,8 @@ class Coordinates extends Interaction {
 
     //?                             Helper Methods
     getRegion() {
-        const arr = this.divideCircleEqually(8)
+        const arr = this.divideCircleEqually(11)
+        console.log(arr)
         const degree = this.degree(this.difference)
         let result
         for (let i = 0; i < arr.length; i++) {
@@ -86,14 +87,14 @@ class Coordinates extends Interaction {
     //?                             Polymorphs
     onmousedown() {
         super.onmousedown(event)
-        this.generateRegions(8, 150)
-        this.drawCircle(this.initial, 8, '#6B9F55')
+        this.generateRegions(11, 150)
+        this.drawCircle(this.initial, 9, '#6B9F55')
     }
 
     ontouchstart(event) {
         super.ontouchstart(event)
-        this.generateRegions(8, 150)
-        this.drawCircle(this.initial, 8, '#6B9F55')
+        this.generateRegions(11, 150)
+        this.drawCircle(this.initial, 9, '#6B9F55')
     }
 
     ontouchmove(event) {
@@ -146,7 +147,7 @@ class Coordinates extends Interaction {
         let ctx = canvas.getContext('2d')
         ctx.beginPath()
         ctx.moveTo(this.initial.x, this.initial.y)
-        ctx.lineTo(this.initial.x + x, this.initial.y + y)
+        ctx.lineTo(this.initial.x - x, this.initial.y - y)
         ctx.strokeStyle = "#707070"
         ctx.stroke()
     }
