@@ -14,39 +14,25 @@ class Coordinates extends Interaction {
     //?                             Information Bar
     info(event) {
         document.getElementById('info').innerHTML = `
-        <div class="row">
-            <div>
                 <h4>Origin</h4> 
                 x: ${Math.round(this.initial.x)} <br>
                 y: ${Math.round(this.initial.y)}
-            </div>
-            <div>
+
                 <h4>Current</h4>
                 x: ${Math.round(this.move.x)} <br>
                 y: ${Math.round(this.move.y)} <br>
-            </div>
-            <div>
+
                 <h4>Difference</h4>
                 x: ${Math.round(this.difference.x)} <br>
                 y: ${Math.round(this.difference.y)}
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <h4>Events</h4>
-                ${this.events.join('<br>')}
-            </div>
-            <div>
+
                 <h4>Polar</h4>
                 Distance: ${Math.round(this.distance(this.difference))} <br>
                 Radian: ${this.radian(this.difference).toFixed(3)} <br>
                 Degree: ${Math.round(this.degree(this.difference))}
-            </div>
-            <div>
+
                 <h4>Misc</h4>
                 Position: ${this.getRegion()}
-            </div>
-        </div>
         `
     }
 
