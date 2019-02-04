@@ -38,7 +38,7 @@ class Coordinates extends Interaction {
 
     //?                             Helper Methods
     getRegion() {
-        const arr = this.divideCircleEqually(11)
+        const arr = this.divideCircleEqually(12)
         const degree = this.degree(this.difference)
         let result
         for (let i = 0; i < arr.length; i++) {
@@ -72,13 +72,13 @@ class Coordinates extends Interaction {
     //?                             Polymorphs
     onmousedown() {
         super.onmousedown(event)
-        this.generateRegions(11, 150)
+        this.generateRegions(12, 150)
         this.drawCircle(this.initial, 9, '#6B9F55')
     }
 
     ontouchstart(event) {
         super.ontouchstart(event)
-        this.generateRegions(11, 150)
+        this.generateRegions(12, 150)
         this.drawCircle(this.initial, 9, '#6B9F55')
     }
 
