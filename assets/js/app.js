@@ -3,9 +3,8 @@ import { Interaction } from './events.js'
 //?                                 Live information on interaction events
 class Coordinates extends Interaction {
     constructor(element, threshold = 0, regions = 0) {
-        super(element, threshold)
+        super(element, threshold, regions)
         this.element = element
-        this.regions = this.createRegions(regions)
 
         // Init
         this.createCanvas(element)
@@ -117,4 +116,4 @@ class Coordinates extends Interaction {
 
 }
 
-new Coordinates(document.getElementById('app'), 30, 12)
+new Coordinates(document.getElementById('app'), 35, 12)
