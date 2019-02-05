@@ -20,7 +20,7 @@ export class Interaction {
     attachEvents() {
         let events = ['mousedown', 'mousemove', 'mouseup', 'mouseleave']
         if ('ontouchstart' in window)
-            events = [this.events, 'touchstart', 'touchmove', 'touchend']
+            events = [...events, 'touchstart', 'touchmove', 'touchend']
         events.forEach(e => this.element.addEventListener(e, this, false))
     }
 
@@ -103,7 +103,7 @@ export class Interaction {
     createRegions(amount) {
         const region = 360 / amount
         return [...Array(amount)].map((_, index) => {
-            return amount % 2 > 0 ? region * index : (region * index) + (region / 2)
+            return amount % 2 > 0 ? (region * index) : (region * index) + (region / 2)
         })
     }
 
