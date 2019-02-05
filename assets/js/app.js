@@ -32,7 +32,7 @@ class Coordinates extends Interaction {
                 Degree: ${Math.round(this.degree(this.difference))}
 
                 <h4>Misc</h4>
-                Region: ${this.circularThreshold() && this.whichRegion()}
+                Region: ${this.circularThreshold() && this.currentRegion()}
         `
     }
 
