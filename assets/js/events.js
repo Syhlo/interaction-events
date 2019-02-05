@@ -107,7 +107,7 @@ export class Interaction {
         })
     }
 
-    whichRegion() {
+    currentRegion() {
         const arr = this.regions
         const degree = this.degree(this.difference)
         for (let i = 0; i < arr.length; i++) {
