@@ -2,9 +2,10 @@ import { Interaction } from './events.js'
 
 //?                                 Live information on interaction events
 class Coordinates extends Interaction {
-    constructor(element, threshold) {
+    constructor(element, threshold = 0, regions = 0) {
         super(element, threshold)
         this.element = element
+        this.regions = this.createRegions(regions)
 
         // Init
         this.createCanvas(element)
@@ -12,15 +13,15 @@ class Coordinates extends Interaction {
     }
 
     //?                             Information Bar
-    info(event) {
+    info() {
         document.getElementById('info').innerHTML = `
                 <h4>Origin</h4> 
                 x: ${Math.round(this.initial.x)} <br>
                 y: ${Math.round(this.initial.y)}
 
                 <h4>Current</h4>
-                x: ${Math.round(this.move.x)} <br>
-                y: ${Math.round(this.move.y)} <br>
+                x: ${Math.round(this.curr.x)} <br>
+                y: ${Math.round(this.curr.y)} <br>
 
                 <h4>Difference</h4>
                 x: ${Math.round(this.difference.x)} <br>
@@ -32,53 +33,20 @@ class Coordinates extends Interaction {
                 Degree: ${Math.round(this.degree(this.difference))}
 
                 <h4>Misc</h4>
-                Position: ${this.getRegion()}
+                Region: ${this.circularThreshold() && this.whichRegion()}
         `
-    }
-
-    //?                             Helper Methods
-    getRegion() {
-        const arr = this.divideCircleEqually(12)
-        const degree = this.degree(this.difference)
-        let result
-        for (let i = 0; i < arr.length; i++) {
-            if (degree > arr[arr.length - 1] || degree < arr[0]) result = arr.length - 1
-            else if (this.inRegion(degree, arr[i], arr[i + 1])) result = i
-        }
-        return result
-    }
-
-    inRegion(degree, regionStart, regionEnd) {
-        return ((degree - regionStart) * (degree - regionEnd) <= 0)
-    }
-
-
-
-    xIsLarger() {
-        return Math.abs(this.difference.x) > Math.abs(this.difference.y)
-    }
-
-    // redo this
-    moveDirection() {
-        if (this.circularThreshold()) {
-            return this.xIsLarger() ?
-                this.difference.x > 0 ? 'left' : 'right'
-                : this.difference.y > 0 ? 'up' : 'down'
-        } else {
-            return 'null'
-        }
     }
 
     //?                             Polymorphs
     onmousedown() {
         super.onmousedown(event)
-        this.generateRegions(12, 150)
+        this.generateRegions(150)
         this.drawCircle(this.initial, 9, '#6B9F55')
     }
 
     ontouchstart(event) {
         super.ontouchstart(event)
-        this.generateRegions(12, 150)
+        this.generateRegions(150)
         this.drawCircle(this.initial, 9, '#6B9F55')
     }
 
@@ -89,7 +57,7 @@ class Coordinates extends Interaction {
 
     onmousemove(event) {
         super.onmousemove(event)
-        if (this._mousedown) {
+        if (this.drag) {
             this.info()
         }
     }
@@ -98,7 +66,7 @@ class Coordinates extends Interaction {
         super.onmouseup(event)
         this.info()
         if (this.circularThreshold()) {
-            this.drawCircle(this.move, 6, '#9F5555')
+            this.drawCircle(this.curr, 6, '#9F5555')
         }
     }
 
@@ -106,7 +74,7 @@ class Coordinates extends Interaction {
         super.ontouchend(event)
         this.info()
         if (this.circularThreshold()) {
-            this.drawCircle(this.move, 6, '#9F5555')
+            this.drawCircle(this.curr, 6, '#9F5555')
         }
     }
 
@@ -120,12 +88,12 @@ class Coordinates extends Interaction {
     }
 
     //?                             Canvas Draw
-    generateRegions(numberOfParts, distance) {
+    generateRegions(distance) {
         canvas.getContext('2d')
             .clearRect(0, 0, canvas.width, canvas.height)
-        this.divideCircleEqually(numberOfParts)
+        this.regions
             .forEach(item => this.drawLine(this.degreeToCartesian(distance, item)))
-        this.drawCircle(this.initial, this.threshold, 'white', true)
+        this.drawCircle(this.initial, this.threshold, getComputedStyle(document.body).backgroundColor, true)
     }
 
     drawLine({ x, y }) {
@@ -133,7 +101,7 @@ class Coordinates extends Interaction {
         ctx.beginPath()
         ctx.moveTo(this.initial.x, this.initial.y)
         ctx.lineTo(this.initial.x - x, this.initial.y - y)
-        ctx.strokeStyle = "#707070"
+        ctx.strokeStyle = getComputedStyle(info).color
         ctx.stroke()
     }
 
@@ -142,11 +110,11 @@ class Coordinates extends Interaction {
         ctx.beginPath()
         ctx.arc(x, y, rad, 0, Math.PI * 2, false)
         ctx.fillStyle = color
-        ctx.strokeStyle = "#707070"
+        ctx.strokeStyle = getComputedStyle(info).color
         if (color) ctx.fill()
         if (stroke) ctx.stroke()
     }
 
 }
 
-new Coordinates(document.getElementById('app'), 40)
+new Coordinates(document.getElementById('app'), 30, 12)
