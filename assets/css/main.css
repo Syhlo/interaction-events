@@ -6,7 +6,7 @@ html, body {
 
 h4 {
     margin: 0;
-    margin-top: 8px;
+    margin-top: 14px;
 }
 
 #app {
@@ -19,9 +19,9 @@ h4 {
 #info {
     display: inline-block;
     position: absolute;
-    bottom: 8px;
-    left: 8px;
-    font-size: 13px;
+    bottom: 10px;
+    left: 10px;
+    font-size: 16px;
     color: #bbbbbb;
 }
 
