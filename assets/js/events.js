@@ -3,14 +3,14 @@
 //TODO:     Get velocity of movement
 
 export class Interaction {
-    constructor(element, treshold = 0) {
+    constructor(element, treshold = 0, regions = 0) {
         this.element = element
-        this.events = ['mousedown', 'mousemove', 'mouseup', 'mouseleave']
         this.threshold = treshold
         this.initial = {}
-        this.move = {}
+        this.curr = {}
         this.difference = {}
-        this._mousedown = false
+        this.drag = false
+        this.regions = this.createRegions(regions)
 
         // init
         this.attachEvents()
@@ -18,9 +18,10 @@ export class Interaction {
 
     //?                             Event listeners & delegation
     attachEvents() {
+        let events = ['mousedown', 'mousemove', 'mouseup', 'mouseleave']
         if ('ontouchstart' in window)
-            this.events = this.events.concat('touchstart', 'touchmove', 'touchend')
-        this.events.forEach(e => this.element.addEventListener(e, this, false))
+            events = [this.events, 'touchstart', 'touchmove', 'touchend']
+        events.forEach(e => this.element.addEventListener(e, this, false))
     }
 
     handleEvent() {
@@ -34,7 +35,7 @@ export class Interaction {
     //?                             Interaction starting
     onmousedown() {
         this.setCoords('initial', event)
-        this._mousedown = true
+        this.drag = true
     }
 
     ontouchstart() {
@@ -47,8 +48,8 @@ export class Interaction {
 
     //?                             Interaction occuring
     onmousemove() {
-        if (this._mousedown) {
-            this.setCoords('move', event)
+        if (this.drag) {
+            this.setCoords('curr', event)
             this.getDifference()
         }
     }
@@ -56,7 +57,7 @@ export class Interaction {
     ontouchmove() {
         const touch = event.targetTouches.item(0)
         if (touch) {
-            this.setCoords('move', touch)
+            this.setCoords('curr', touch)
             this.getDifference()
         }
     }
@@ -64,11 +65,11 @@ export class Interaction {
 
     //?                             Interaction ended
     onmouseleave() {
-        this._mousedown = false
+        this.drag = false
     }
 
     onmouseup() {
-        this._mousedown = false
+        this.drag = false
     }
 
     ontouchend() {
@@ -92,23 +93,30 @@ export class Interaction {
         return Math.abs(this.distance(this.difference)) > this.threshold
     }
 
-    //?                             Process methods
-    divideCircleEqually(numberOfParts) {
-        const part = 360 / numberOfParts
+    inRegion(degree, region, regionEnd) {
+        return ((degree - region) * (degree - regionEnd) <= 0)
+    }
+
+    //?                             Region methods
+    createRegions(amount) {
+        const region = 360 / amount
         let arr = []
-        for (let i = 0; i < numberOfParts; i++) {
-            if (!!(numberOfParts % 2)) arr.push(Math.round(part * i))
-            else arr.push(Math.round((part * i) + (part / 2)))
+        for (let i = 0; i < amount; i++) {
+            if (amount % 2 > 0) arr.push(region * i)
+            else arr.push((region * i) + (region / 2))
         }
         return arr.length > 1 ? arr : false
     }
 
-    degreeToCartesian(distance, degree) {
-        let theta = degree > 180 ? (degree - 360) * Math.PI / 180 : degree * Math.PI / 180
-        return {
-            x: Math.round(distance * Math.cos(theta)),
-            y: Math.round(distance * Math.sin(theta))
+
+    whichRegion() {
+        const arr = this.regions
+        const degree = this.degree(this.difference)
+        for (let i = 0; i < arr.length; i++) {
+            if (degree > arr[arr.length - 1] || degree < arr[0]) var result = arr.length - 1
+            else if (this.inRegion(degree, arr[i], arr[i + 1])) var result = i
         }
+        return result
     }
 
     //?                             Helper methods
@@ -119,8 +127,16 @@ export class Interaction {
 
     getDifference() {
         this.difference = {
-            x: (this.initial.x - this.move.x),
-            y: (this.initial.y - this.move.y)
+            x: (this.initial.x - this.curr.x),
+            y: (this.initial.y - this.curr.y)
+        }
+    }
+
+    degreeToCartesian(distance, degree) {
+        let theta = degree * Math.PI / 180
+        return {
+            x: Math.round(distance * Math.cos(theta)),
+            y: Math.round(distance * Math.sin(theta))
         }
     }
 }
