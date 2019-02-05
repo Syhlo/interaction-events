@@ -76,6 +76,7 @@ export class Interaction {
         // TBD
     }
 
+
     //?                             Data methods
     distance({ x, y }) {
         return Math.sqrt(x * x + y * y)
@@ -97,17 +98,14 @@ export class Interaction {
         return ((degree - region) * (degree - regionEnd) <= 0)
     }
 
+
     //?                             Region methods
     createRegions(amount) {
         const region = 360 / amount
-        let arr = []
-        for (let i = 0; i < amount; i++) {
-            if (amount % 2 > 0) arr.push(region * i)
-            else arr.push((region * i) + (region / 2))
-        }
-        return arr.length > 1 ? arr : false
+        return [...Array(amount)].map((_, index) => {
+            return amount % 2 > 0 ? region * index : (region * index) + (region / 2)
+        })
     }
-
 
     whichRegion() {
         const arr = this.regions
@@ -133,7 +131,7 @@ export class Interaction {
     }
 
     degreeToCartesian(distance, degree) {
-        let theta = degree * Math.PI / 180
+        const theta = degree * Math.PI / 180
         return {
             x: Math.round(distance * Math.cos(theta)),
             y: Math.round(distance * Math.sin(theta))
