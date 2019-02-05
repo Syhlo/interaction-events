@@ -91,7 +91,7 @@ export class Interaction {
     }
 
     circularThreshold() {
-        return Math.abs(this.distance(this.difference)) > this.threshold
+        return this.distance(this.difference) > this.threshold
     }
 
     inRegion(degree, region, regionEnd) {
@@ -131,10 +131,9 @@ export class Interaction {
     }
 
     degreeToCartesian(distance, degree) {
-        const theta = degree * Math.PI / 180
         return {
-            x: Math.round(distance * Math.cos(theta)),
-            y: Math.round(distance * Math.sin(theta))
+            x: distance * Math.cos(degree * Math.PI / 180),
+            y: distance * Math.sin(degree * Math.PI / 180)
         }
     }
 }
