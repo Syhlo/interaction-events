@@ -102,19 +102,17 @@ export class Interaction {
     //?                             Region methods
     createRegions(amount) {
         const region = 360 / amount
-        return [...Array(amount)].map((_, index) => {
-            return amount % 2 > 0 ? (region * index) : (region * index) + (region / 2)
-        })
+        return [...Array(amount)].map((_, index) =>
+            amount % 2 > 0 ? (region * index) : (region * index) + (region / 2)
+        )
     }
 
     currentRegion() {
-        const arr = this.regions
         const degree = this.degree(this.difference)
-        for (let i = 0; i < arr.length; i++) {
-            if (degree > arr[arr.length - 1] || degree < arr[0]) var result = arr.length - 1
-            else if (this.inRegion(degree, arr[i], arr[i + 1])) var result = i
-        }
-        return result
+        return this.regions.reduce((prev, next, index) => {
+            if (this.inRegion(degree, prev, next)) next = { region: index }
+            return Object.keys(prev).includes('region') ? prev : next
+        }).region || 0
     }
 
     //?                             Helper methods
