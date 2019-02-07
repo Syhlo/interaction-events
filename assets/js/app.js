@@ -1,4 +1,4 @@
-import { Interaction } from './events.js'
+import { Interaction } from './interaction.js'
 
 //?                                 Live information on interaction events
 class Coordinates extends Interaction {
@@ -32,7 +32,7 @@ class Coordinates extends Interaction {
                 Degree: ${Math.round(this.degree(this.difference))}
 
                 <h4>Misc</h4>
-                Region: ${this.circularThreshold() && this.currentRegion()}
+                Region: ${this.circularThreshold() && this.currentRegion(this.degree(this.difference))}
         `
     }
 
