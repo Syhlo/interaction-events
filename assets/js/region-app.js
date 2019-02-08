@@ -1,4 +1,4 @@
-import { Interaction } from './interaction.js'
+import { Interaction } from './source/interaction.js'
 
 //?                                 Live information on interaction events
 class Coordinates extends Interaction {
@@ -14,25 +14,7 @@ class Coordinates extends Interaction {
     //?                             Information Bar
     info() {
         document.getElementById('info').innerHTML = `
-                <h4>Origin</h4> 
-                x: ${Math.round(this.initial.x)} <br>
-                y: ${Math.round(this.initial.y)}
-
-                <h4>Current</h4>
-                x: ${Math.round(this.curr.x)} <br>
-                y: ${Math.round(this.curr.y)} <br>
-
-                <h4>Difference</h4>
-                x: ${Math.round(this.difference.x)} <br>
-                y: ${Math.round(this.difference.y)}
-
-                <h4>Polar</h4>
-                Distance: ${Math.round(this.distance(this.difference))} <br>
-                Radian: ${this.radian(this.difference).toFixed(3)} <br>
-                Degree: ${Math.round(this.degree(this.difference))}
-
-                <h4>Misc</h4>
-                Region: ${this.circularThreshold() && this.currentRegion(this.degree(this.difference))}
+                Region: ${this.circularThreshold() && this.currentRegion}
         `
     }
 
@@ -54,7 +36,7 @@ class Coordinates extends Interaction {
         this.info()
     }
 
-    onmousemove(event) {
+    onmousemove(event, fn) {
         super.onmousemove(event)
         if (this.drag) {
             this.info()
@@ -116,4 +98,5 @@ class Coordinates extends Interaction {
 
 }
 
-new Coordinates(document.getElementById('app'), 35, 12)
+const Interact = new Coordinates(document.getElementById('app'), 35)
+Interact.createRegions(12)
