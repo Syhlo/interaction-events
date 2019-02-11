@@ -18,7 +18,7 @@ export class Regions extends Data {
         return this.regions.reduce((prev, next, index) =>
             this.inRegion(degree, prev, next) ? next = { region: index } :
                 prev.region ? prev : next
-        ).region || 0
+        ).region || this.regions.length
     }
 
     inRegion(degree, region, regionEnd) {
@@ -26,7 +26,6 @@ export class Regions extends Data {
     }
 
     // polymorph to send down flow
-
     onmousemove() {
         if (this.regions) {
             this.currentRegion = this.getCurrentRegion(this.degree(this.difference))
