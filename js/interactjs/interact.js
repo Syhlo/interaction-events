@@ -30,7 +30,7 @@ export class Interact extends Events {
     onmousemove() {
         if (this.drag) {
             super.onmousemove()
-            this.setCoords('curr', event)
+            this.setCoords('current', event)
             this.getDifference()
             this.events.move()
         }
@@ -38,7 +38,7 @@ export class Interact extends Events {
 
     ontouchmove() {
         if (event.targetTouches.item(0)) {
-            this.setCoords('curr', touch)
+            this.setCoords('current', touch)
             this.getDifference()
             this.events.move()
         }
@@ -46,13 +46,17 @@ export class Interact extends Events {
 
     //?                             Interaction ended
     onmouseleave() {
-        this.drag = false
-        this.events.end()
+        if (this.drag) {
+            this.drag = false
+            this.events.end()
+        }
     }
 
     onmouseup() {
-        this.drag = false
-        this.events.end()
+        if (this.drag) {
+            this.drag = false
+            this.events.end()
+        }
     }
 
     ontouchend() {
