@@ -1,4 +1,4 @@
-import { Interact } from './interactjs/interaction.js'
+import { Interact } from '../interactjs/interaction.js'
 
 //?                                 Live information on interaction events
 class Coordinates extends Interact {
