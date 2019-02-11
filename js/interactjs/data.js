@@ -1,7 +1,7 @@
 export class Data {
     constructor() {
         this.initial = {}
-        this.curr = {}
+        this.current = {}
         this.difference = {}
         this.threshold
     }
@@ -29,8 +29,8 @@ export class Data {
 
     getDifference() {
         this.difference = {
-            x: (this.initial.x - this.curr.x),
-            y: (this.initial.y - this.curr.y)
+            x: (this.initial.x - this.current.x),
+            y: (this.initial.y - this.current.y)
         }
     }
 
