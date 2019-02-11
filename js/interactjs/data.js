@@ -19,7 +19,7 @@ export class Data {
     }
 
     circularThreshold() {
-        return this.distance(this.difference) > this.threshold
+        return this.threshold ? this.distance(this.difference) > this.threshold : true
     }
 
     setCoords(name, type) {
