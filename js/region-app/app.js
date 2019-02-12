@@ -43,3 +43,13 @@ function onend() {
 
 // Initial info
 info();
+
+regionAmount.addEventListener('change', () => {
+    if (regionAmount.value > 2) {
+        app.createRegions(parseInt(regionAmount.value))
+        regionAmount.blur()
+        draw.regions(150, app)
+        draw.circle(app.initial, 9, '#6B9F55')
+        if (app.circularThreshold()) draw.circle(app.current, 6, '#9F5555')
+    }
+})
