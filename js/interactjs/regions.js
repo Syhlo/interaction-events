@@ -32,4 +32,10 @@ export class Regions extends Data {
         }
     }
 
+    ontouchmove() {
+        if (this.regions) {
+            this.currentRegion = this.getCurrentRegion(this.degree(this.difference))
+        }
+    }
+
 }

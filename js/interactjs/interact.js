@@ -20,7 +20,8 @@ export class Interact extends Events {
     }
 
     ontouchstart() {
-        if (event.targetTouches.item(0)) {
+        let touch = event.targetTouches.item(0)
+        if (touch) {
             this.setCoords('initial', touch)
             this.events.start()
         }
@@ -37,7 +38,9 @@ export class Interact extends Events {
     }
 
     ontouchmove() {
-        if (event.targetTouches.item(0)) {
+        let touch = event.targetTouches.item(0)
+        if (touch) {
+            super.ontouchmove()
             this.setCoords('current', touch)
             this.getDifference()
             this.events.move()
