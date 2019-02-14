@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Mukta');
+
 html, body {
     height: 100%;
     margin: 0;
-    background: #242424;
+    background: rgb(64, 66, 77);
+    font-family: 'Mukta', sans-serif;
 }
 
 h4 {
@@ -21,7 +24,7 @@ h4 {
     position: absolute;
     bottom: 10px;
     left: 10px;
-    font-size: 18px;
+    font-size: 16px;
     color: #bbbbbb;
 }
 
@@ -56,4 +59,8 @@ canvas {
     left: 0;
     top: 0;
     cursor: pointer;
+}
+
+input {
+    margin-left: 5px;
 }
